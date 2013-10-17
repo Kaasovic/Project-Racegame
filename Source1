@@ -108,6 +108,14 @@ namespace TheRoadNotTaken
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
+        
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//                      MASSAAL AANGEPAST!
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Wanneer Key Up of Down wordt los gelaten, rolt de auto uit.
+// + Wat random shizzle toegevoegd. Zoals zelf gas geven ect.
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
         protected override void Update(GameTime gameTime)
         {
             // TODO: Add your update logic here
@@ -151,12 +159,14 @@ namespace TheRoadNotTaken
                 mCarPosition.Y += (float)(Move * Math.Sin(mCarRotation));
             }
 
+/* ////////////////////////////// Zorgt dat de auto kan uitrollen.
+           
             if (aKeyboard.IsKeyUp(Keys.Up) == true && Move >= 0)
             {
                     Move -= 20 / 0.7 * gameTime.ElapsedGameTime.TotalSeconds;
                     if (Move < 0)
                     {
-                        Move = 0;
+                        Move = 0; //Zonder dit stukje, rijdt de auto een negatieve snelheid.
                     }
             }
 
@@ -169,15 +179,21 @@ namespace TheRoadNotTaken
                 }
             }
 
+//COLLISIONS MET BOUNDRIES VAN DE MAP
+            
             if (CollisionOccurred(Move, mCarRotation) == true)
             {
                 Move = Move * -0.25;
             }
 
+//COLLISIONS MET OLIEVLEK
+            
             if (OilCol(Move, mCarRotation) == true)
             {
                 Move = Move * 0.5;
             }
+            
+//COLLISIONS MET TURBOPLAAT
 
             if (ItemCol(Move, mCarRotation) == true)
             {
@@ -190,6 +206,8 @@ namespace TheRoadNotTaken
         }
 
 
+//COLLISION BOUNDRIES
+        
         //This method checks to see if the Sprite is going to move into an area that does
         //not contain all Gray pixels. If the move amount would cause a movement into a non-gray
         //pixel, then a collision has occurred.
@@ -277,12 +295,15 @@ namespace TheRoadNotTaken
             int Speed = Convert.ToInt16(Move);
             spriteBatch.DrawString(Font, "Speed: " + Speed.ToString(), new Vector2(25, 25), Color.Black);
             //spriteBatch.Draw(mTrackRenderRotated.GetTexture(), mCarArea, new Rectangle(0, 0, 1, 1), Color.Black);
-
+//DRAW VAN DE HUD
 
             spriteBatch.End();
 
             base.Draw(gameTime);
         }
+        
+//COLLISION OLIE
+        
         private bool OilCol(double Move, float aCarRotation)
         {
             //Calculate the Position of the Car and create the collision Texture. This texture will contain
@@ -352,6 +373,8 @@ namespace TheRoadNotTaken
             return mTrackRenderRotated;
         }
 
+//COLLISION TURBO
+        
         private bool ItemCol(double Move, float aCarRotation)
         {
             //Calculate the Position of the Car and create the collision Texture. This texture will contain
