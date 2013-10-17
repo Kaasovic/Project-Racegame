@@ -159,7 +159,7 @@ namespace TheRoadNotTaken
                 mCarPosition.Y += (float)(Move * Math.Sin(mCarRotation));
             }
 
-/* ////////////////////////////// Zorgt dat de auto kan uitrollen.
+///////////////////////////////// Zorgt dat de auto kan uitrollen.
            
             if (aKeyboard.IsKeyUp(Keys.Up) == true && Move >= 0)
             {
